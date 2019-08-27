@@ -6,6 +6,7 @@ app.controller('indexCtrl', function($scope, $http) {
   }
   
   $scope.loadData = function() {
+    $scope.rsQuestsUrl = null;
     $scope.rsQuests = JSON.parse($scope.rawData).quests;
   }
 });

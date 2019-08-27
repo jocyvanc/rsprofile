@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="css/app.css">
   <script src="js/vendor/angular.min.js"></script>
 </head>
-<body ng-app="rsProfile" ng-controller="indexCtrl">
+<body ng-app="rsProfile" ng-controller="indexCtrl" ng-init="nickname='u Erir man'">
   <form novalidate>
     <input type="text" ng-model="nickname">
     <button ng-click="getLinks()" class="button">Get Links</button>
@@ -25,15 +25,21 @@
     <button ng-click="loadData()" class="button">Load data</button>
   </div>
 
-  <table ng-show="rsQuestsUrl">
+  <table ng-show="rsQuests">
     <thead>
       <tr>
         <th>Name</th>
+        <th>Status</th>
+        <th>Difficulty</th>
+        <th>Can do?</th>
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="quest in rsQuests">
+      <tr ng-repeat="quest in rsQuests" ng-hide="quest.status == 'COMPLETED'">
         <td>{{quest.title}}</td>
+        <td>{{quest.status}}</td>
+        <td>{{quest.difficulty}}</td>
+        <td>{{(quest.userEligible) ? "Yes" : "No"}}</td>
       </tr>
     </tbody>
   </table>
