@@ -1,5 +1,3 @@
-$(document).foundation()
-
 var app = angular.module('rsProfile', []);
 
 app.controller('indexCtrl', function($scope, $http) {
