@@ -5,17 +5,42 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Rs Profile</title>
+  <link rel="stylesheet" href="css/foundation.css">
+  <link rel="stylesheet" href="css/app.css">
   <script src="angular.min.js"></script>
 </head>
 <body ng-app="rsProfile" ng-controller="indexCtrl">
-  <form novalidate></form>
-  <input type="text" ng-model="nickname">
-  <button ng-click="getProfile()">Get Profile</button>
+  <form novalidate>
+    <input type="text" ng-model="nickname">
+    <button ng-click="getLinks()" class="button">Get Links</button>
+  </form>
 
-  <div ng-show="status">
-    <span ng-bind="nickname"></span> | <span ng-bind="status"></span>
+  <div ng-show="rsQuestsUrl">
+    <span ng-bind="nickname"></span> | <a ng-href="{{rsQuestsUrl}}" target="_blank">Quests</a>
   </div>
 
-  <script src="app.js"></script>
+  <div ng-show="rsQuestsUrl">
+    <textarea name="" id="" cols="30" rows="10" ng-model="rawData"></textarea>
+    <br>
+    <button ng-click="loadData()" class="button">Load data</button>
+  </div>
+
+  <table ng-show="rsQuestsUrl">
+    <thead>
+      <tr>
+        <th>Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="quest in rsQuests">
+        <td>{{quest.title}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <script src="js/vendor/jquery.js"></script>
+  <script src="js/vendor/what-input.js"></script>
+  <script src="js/vendor/foundation.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>
