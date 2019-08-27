@@ -9,41 +9,56 @@
   <link rel="stylesheet" href="css/app.css">
   <script src="js/vendor/angular.min.js"></script>
 </head>
-<body ng-app="rsProfile" ng-controller="indexCtrl" ng-init="nickname='u Erir man'">
-  <form novalidate>
-    <input type="text" ng-model="nickname">
-    <button ng-click="getLinks()" class="button">Get Links</button>
-  </form>
+<body ng-app="rsProfile" ng-controller="indexCtrl">
+  <div class="content-wrapper">
 
-  <div ng-show="rsQuestsUrl">
-    <span ng-bind="nickname"></span> | <a ng-href="{{rsQuestsUrl}}" target="_blank">Quests</a>
+    <form novalidate>
+      <div class="input-group">
+        <input type="text" class="input-group-field" placeholder="RSN" ng-model="nickname">
+        <div class="input-group-button">
+          <input type="submit" class="button" value="Get Links" ng-click="getLinks()">
+        </div>
+      </div>
+    </form>
+
+    <div ng-show="rsQuestsUrl">
+      <span ng-bind="nickname"></span> | <a ng-href="{{rsQuestsUrl}}" target="_blank">Quests</a>
+    </div>
+  
+    <form ng-show="rsQuestsUrl">
+      <textarea ng-model="rawData" placeholder="Past here the JSON chosen"></textarea>
+      <button ng-click="loadData()" class="button right">Load data</button>
+    </form>
+  
+    <div ng-show="rsQuests">
+      filters
+      <div>
+        <input type="checkbox" name="completed_filter" id="completed_filter" ng-model="completed_filter">
+        <label for="completed_filter">completed</label>
+        <input type="checkbox" name="eligible_filter" id="eligible_filter" ng-model="eligible_filter">
+        <label for="eligible_filter">eligible</label>
+      </div>
+    
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Difficulty</th>
+            <th>Can do?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="quest in rsQuests" ng-hide="filter(quest)">
+            <td>{{quest.title}}</td>
+            <td>{{quest.status}}</td>
+            <td>{{quest.difficulty}}</td>
+            <td>{{(quest.userEligible) ? "Yes" : "No"}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
-
-  <div ng-show="rsQuestsUrl">
-    <textarea name="" id="" cols="30" rows="10" ng-model="rawData"></textarea>
-    <br>
-    <button ng-click="loadData()" class="button">Load data</button>
-  </div>
-
-  <table ng-show="rsQuests">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Status</th>
-        <th>Difficulty</th>
-        <th>Can do?</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="quest in rsQuests" ng-hide="quest.status == 'COMPLETED'">
-        <td>{{quest.title}}</td>
-        <td>{{quest.status}}</td>
-        <td>{{quest.difficulty}}</td>
-        <td>{{(quest.userEligible) ? "Yes" : "No"}}</td>
-      </tr>
-    </tbody>
-  </table>
-
   <script src="js/vendor/jquery.js"></script>
   <script src="js/vendor/what-input.js"></script>
   <script src="js/vendor/foundation.min.js"></script>
